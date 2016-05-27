@@ -1,0 +1,15 @@
+[Unit]
+Description=Docker volume plugin for S3
+Before=docker.service
+After=network.target s3-volume.socket
+Requires=s3-volume.socket docker.service
+
+[Service]
+ExecStart=/usr/bin/s3-docker-volume
+StandardOutput=syslog
+SyslogIdentifier=s3volume
+User=root
+Group=docker
+
+[Install]
+WantedBy=multi-user.target

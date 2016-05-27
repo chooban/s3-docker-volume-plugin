@@ -1,0 +1,9 @@
+[Unit]
+Description=Docker volume plugin for S3
+PartOf=s3-volume.service
+
+[Socket]
+ListenStream=/run/docker/plugins/s3-volume.sock
+
+[Install]
+WantedBy=sockets.target

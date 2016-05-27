@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+var app = require('../app/server');
+var http = require('http');
+var logger = require('../app/util/logger');
+require('systemd');
+
+var server = http.createServer(app);
+
+logger.info('Attempting to listen...');
+server.listen('systemd');
+
+server.on('error', onError);
+server.on('listening', onListening);
+
+process.on ('SIGTERM', gracefulShutdown);
+process.on ('SIGINT', gracefulShutdown);
+
+function gracefulShutdown() {
+  logger.info('Received shutdown signal');
+  server.close(() => {
+
+    logger.info('Closed out remaining connections');
+    process.exit();
+  });
+
+  setTimeout(function() {
+    logger.error("Could not close connections in time, forcefully shutting down");
+    process.exit()
+  }, 10*1000);
+}
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  switch (error.code) {
+    case 'EACCES':
+      logger.error('Requires elevated privileges');
+      logger.error(error);
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      logger.error('Address is already in use');
+      logger.error(error);
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+function onListening() {
+  var addr = server.address();
+  logger.debug('Listening on ' + addr);
+}
