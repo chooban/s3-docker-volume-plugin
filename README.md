@@ -26,7 +26,7 @@ If you're like me, you'll have your npm config set up to install packages local 
 This POC code needs things to be installed globally, so switch to root and run:
 
   * `npm install -g forever`
-  * `npm install -g ./s3-volume-plugin-1.0.0.tgz
+  * `npm install -g ./s3-volume-plugin-1.0.0.tgz`
   * `systemctl restart s3-volume`
 
 ## Creating an S3 Volume
