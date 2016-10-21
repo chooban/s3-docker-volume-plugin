@@ -7,7 +7,7 @@ volumes which are backed by an S3 bucket.
 
 **__No, really, it's not__**
 
-I put this together in less than a day to see if I could.
+I put this together in less than a day to see if I could, then wrote a [blog post](http://blog.scottlogic.com/2016/05/30/writing-a-docker-volume-plugin.html) and forgot about it.
 
 ## Installation
 
